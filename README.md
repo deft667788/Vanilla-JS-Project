@@ -6,8 +6,10 @@ Constraints & Assumptions
 Marking Criteria
 Originality of Work
 Submission
-Late Submission Policy 0. Change Log
-N/A
+Late Submission Policy
+
+0. Change Log
+   13/03/2023 - Updated the description of the '/job/feed' endpoint in Swagger docs from 'all jobs' -> 'next 5 jobs'.
 
 1. Background & Motivation
    Web-based applications are becoming the most common way to build a digital capability accessible to a mass audience. While there are modern tools that help us build these rapidly, it's important to understand the fundamental JavaScript-based technology and architectures that exist, both to gain a deeper understanding for when these skills may be needed, but also to simply understand the mechanics of fundamental JS. Even when working with a high level framework like ReactJS, understanding (in-concept) the code that it is transpiled to will ensure you're a more well rounded web-based engineer.
