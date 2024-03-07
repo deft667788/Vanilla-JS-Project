@@ -80,10 +80,14 @@ body {
   top: 35%;
   left: 15px;
   color: rgba(0, 0, 0, 0.6);
-}*/
+} */
 
 #email,
-#password {
+#password,
+#regis-email,
+#regis-name,
+#regis-password,
+#password-confirm {
   width: 100%;
   padding: 16px;
   box-sizing: border-box;
@@ -116,7 +120,9 @@ body {
 }
 
 .email,
-.password {
+.password,
+.name,
+.password-confirm {
   margin-top: 24px;
 }
 
@@ -145,7 +151,7 @@ body {
 
 .join-switch {
   text-align: center;
-  font-size: 11pt;
+  font-size: 16px;
   margin-top: 32px;
   height: 32px;
 }
@@ -154,11 +160,11 @@ body {
   border: none;
   height: 32px;
   margin: 0;
-  padding: 0 8px;
+  padding: 0 4px;
   background-color: #ffffff;
   color: #0a66c2;
-  font-size: 1.2rem;
   transition-duration: 0.167s;
+  font-weight: bold;
 }
 
 .switch-btn:hover {
