@@ -27,9 +27,7 @@ export function login() {
       console.log(data.userId);
     })
     .catch(() => {
-      errorPopup(
-        "Your email and password don't match!!! Please try again"
-      );
+      errorPopup("Your email and password don't match!!! Please try again");
     });
 }
 
@@ -47,4 +45,10 @@ export function errorPopup(errorMessage = "error happens") {
     errorBox.classList.add("hidden");
   })
   //  resume from error
+}
+
+//  Sign in switch register
+export function swap(page1, page2) {
+  document.getElementById(page1).classList.add("hidden");
+  document.getElementById(page2).classList.remove("hidden");
 }
