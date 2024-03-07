@@ -9,7 +9,7 @@ signInButton.addEventListener("click", () => {
 });
 
 const registerButton = document.getElementById("register-button");
-registration.addEventListener("click", () => {
+registerButton.addEventListener("click", () => {
   registration();
 });
 
