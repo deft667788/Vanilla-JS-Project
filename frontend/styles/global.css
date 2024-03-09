@@ -8,7 +8,6 @@
 html,
 body {
   font-family: Arial;
-  background-color: #ffffff;
 }
 
 #Login {
@@ -16,6 +15,7 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  background-color: #ffffff;
 }
 
 .LurkForWork-logo {
@@ -29,7 +29,7 @@ body {
   left: 0;
 }
 
-.LurkForWork-logo span {
+.logo {
   background-color: #0a66c2;
   color: #ffffff;
   border-radius: 2px;
@@ -71,15 +71,15 @@ body {
 }
 
 /* .email {
-position: relative;
-margin: 0 auto;
+  position: relative;
+  margin: 0 auto;
 }
 
 .label-for-email {
-position: absolute;
-top: 35%;
-left: 15px;
-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  top: 35%;
+  left: 15px;
+  color: rgba(0, 0, 0, 0.6);
 } */
 
 #email,
@@ -197,37 +197,132 @@ color: rgba(0, 0, 0, 0.6);
 
 #Menu-bar {
   width: 100vw;
-  height: 50px;
+  height: 52px;
   background-color: #ffffff;
+}
+
+#Menu-items {
+  display: flex;
+  align-items: center;
+  width: 1128px;
+  min-height: 100%;
+  margin: 0 auto;
 }
 
 #Homepage-content {
-  margin: 20px auto 0 auto;
+  margin: 24px auto 0;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  column-gap: 20px;
+  width: 1128px;
 }
 
-.Homepage-Item {
-  border-radius: 10px;
+@media (min-width: 1200px) {
+}
+
+#new-post {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.text-post-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 8px 16px 0;
+}
+
+.post-head-pic {
+  width: 48px;
+  height: 48px;
+}
+
+#text-post {
+  margin: 4px 0;
+}
+.post-select {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-bottom: 4px;
+}
+
+.post-select button {
+  padding: 0 8px;
+}
+
+.feed_border {
+  border: 0;
+  display: block;
+  height: 1px;
+  margin: 8px 8px 8px 0;
+  padding: 0;
+  border-color: rgba(0, 0, 0, 0.15);
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+#post {
+  margin-top: 8px;
 }
 
 #User-window {
-  width: 20%;
+  grid-area: sidebar;
+}
+#Posts-div {
+  grid-area: posts;
+}
+#News {
+  grid-area: aside;
 }
 
-#Linked-In-News {
-  width: 20%;
+#User-window,
+#News {
+  display: flex;
+  flex-direction: column;
 }
 
-#Posts {
-  width: 40%;
+#Homepage-content {
+  display: grid;
+  grid-template-columns: 300px auto 300px;
+  grid-template-areas: "sidebar posts aside";
+  column-gap: 22px;
+}
+
+@media (max-width: 1200px) {
+  #Homepage-content {
+    width: 960px;
+  }
+}
+
+@media (max-width: 992px) {
+  #Homepage-content {
+    width: 720px;
+    display: grid;
+    grid-template-columns: 300px auto;
+    grid-template-areas:
+      "sidebar posts"
+      ". aside";
+    column-gap: 22px;
+  }
+}
+
+@media (max-width: 768px) {
+  #Homepage-content {
+    width: 576px;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "sidebar"
+      "posts"
+      "aside";
+    column-gap: 22px;
+  }
 }
 
 .Homepage-Item {
-  height: 100vh;
   background-color: #ffffff;
+  border-radius: 10px;
+  margin-bottom: 8px;
 }
 
 .hidden {
