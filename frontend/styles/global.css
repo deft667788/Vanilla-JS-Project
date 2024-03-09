@@ -328,3 +328,7 @@ body {
 .hidden {
   display: none !important;
 }
+
+.Creator-Content {
+  display: flex;
+}
