@@ -5,7 +5,7 @@ export function errorPopup(errorMessage = "error happens") {
   errorBox.classList.remove("hidden");
   const closeButton = document.getElementById("close-error-window");
   closeButton.addEventListener("click", () => {
-    errorBox.classList.add("hidden");
+    errorBox.classList.add("Hidden");
   });
   //  Resume from error
 }
