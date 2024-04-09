@@ -44,6 +44,10 @@ body {
   font-size: 12pt;
 }
 
+#email:focus {
+  border-color:#0ac238;
+}
+
 .Linkedin-logo {
   margin-left: 56px;
   margin-bottom: 20px;
