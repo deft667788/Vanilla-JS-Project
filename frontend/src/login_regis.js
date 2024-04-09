@@ -48,3 +48,9 @@ export function errorPopup(errorMessage = "error happens") {
   });
   //  resume from error
 }
+
+//  sign in switch register
+export function swap(page1, page2) {
+  document.getElementById(page1).classList.add("hidden");
+  document.getElementById(page2).classList.remove("hidden");
+}

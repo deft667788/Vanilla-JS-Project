@@ -1,40 +1,86 @@
 /* base styles, feel free to edit */
-html,
-body {
+
+* {
   margin: 0;
   padding: 0;
-  height: 100vh;
+}
+
+html,
+body {
   font-family: Arial;
   background-color: #ffffff;
 }
 
-.login-interface {
+.container {
   height: 100vh;
   display: flex;
+  justify-content: center;
   flex-direction: column;
 }
 
-.login-window {
-  width: 380px;
-  margin: auto;
+.LurkForWork-logo {
+  margin-left: 56px;
+  margin-top: 32px;
+  color: #0a66c2;
+  font-weight: bolder;
+  font-size: 24px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.LurkForWork-logo span {
+  background-color: #0a66c2;
+  color: #ffffff;
+  border-radius: 2px;
+  padding: 0 4px 0 4px;
+  margin-left: 4px;
+}
+
+.card-layout {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .window {
-  margin: auto 0;
-  margin-bottom: 150px;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 352px;
+  margin: 0 auto;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
   box-sizing: border-box;
 }
 
 .header-content h1 {
-  margin-bottom: 0px;
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.9);
+  padding: 0 0 4px 0;
+  margin: 0;
 }
 
 .header-content p {
-  font-size: 10pt;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.9);
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0;
 }
+
+/* .email {
+  position: relative;
+  margin: 0 auto;
+}
+
+.label-for-email {
+  position: absolute;
+  top: 35%;
+  left: 15px;
+  color: rgba(0, 0, 0, 0.6);
+} */
 
 #email,
 #password {
@@ -44,29 +90,29 @@ body {
   font-size: 12pt;
 }
 
-.Linkedin-logo {
-  margin-left: 56px;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  color: #0a66c2;
-  font-weight: bolder;
+#email:focus,
+#password:focus {
+  border-color: #0a66c2;
 }
 
-.Linkedin-logo span {
-  background-color: #0a66c2;
-  color: #ffffff;
-  border-radius: 3px;
-  padding: 0 4px 0 3px;
+.hr {
+  border: none;
+  border-top: 1px solid;
+  color: rgba(0, 0, 0, 0.15);
+  overflow: visible;
+  text-align: center;
 }
 
-.Or-join {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-hr {
+.hr::after {
   display: inline-block;
-  width: 40%;
+  background: #fff;
+  content: "or";
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+  padding: 0 4px;
+  position: relative;
+  top: -11px;
+  width: 30px;
 }
 
 .email,
@@ -78,7 +124,8 @@ hr {
   margin: 20px 0;
 }
 
-.sign-in-button {
+#sign-in-button,
+#register-button {
   background-color: #0a66c2;
   border-radius: 25px;
   padding: 15px 20px;
@@ -88,25 +135,33 @@ hr {
   width: 100%;
 }
 
-.join-now {
+#sign-in-button:hover,
+#register-button:hover {
+  cursor: pointer;
+  background-color: #094d92;
+  height: 100%;
+  border-radius: 28px;
+}
+
+.join-switch {
   text-align: center;
-  font-size: 11pt;
+  font-size: 16px;
   margin-top: 32px;
   height: 32px;
 }
 
-.registration {
+.switch-btn {
   border: none;
   height: 32px;
   margin: 0;
-  padding: 0 8px;
+  padding: 0 4px;
   background-color: #ffffff;
   color: #0a66c2;
-  font-size: 1.2rem;
-  transition-duration:0.167s;
+  transition-duration: 0.167s;
+  font-weight: bold;
 }
 
-.registration:hover {
+.switch-btn:hover {
   cursor: pointer;
   background-color: #d0e8ff;
   height: 100%;
@@ -115,20 +170,20 @@ hr {
 }
 
 #error-box {
-  width:20vw;
-  height:auto;
-  position:absolute;
-  top:30vh;
-  left:40vw;
-  border:5px solid #0a66c2;
-  border-radius:15%;
-  background-color:#ffffff;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+  width: 20vw;
+  height: auto;
+  position: absolute;
+  top: 30vh;
+  left: 40vw;
+  border: 5px solid #0a66c2;
+  border-radius: 15%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .hidden {
-  display:none !important;
+  display: none !important;
 }
