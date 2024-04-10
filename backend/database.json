@@ -1,5 +1,11 @@
 {
   "users": {
+    "25819": {
+      "email": "hanwen.shi667788@gmail.com",
+      "name": "Hanwen",
+      "password": "111",
+      "watcheeUserIds": {}
+    },
     "65687": {
       "email": "betty@email.com",
       "name": "Betty",
