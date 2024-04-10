@@ -71,19 +71,23 @@ body {
 }
 
 /* .email {
-  position: relative;
-  margin: 0 auto;
+position: relative;
+margin: 0 auto;
 }
 
 .label-for-email {
-  position: absolute;
-  top: 35%;
-  left: 15px;
-  color: rgba(0, 0, 0, 0.6);
+position: absolute;
+top: 35%;
+left: 15px;
+color: rgba(0, 0, 0, 0.6);
 } */
 
 #email,
-#password {
+#password,
+#regis-email,
+#regis-name,
+#regis-password,
+#password-confirm {
   width: 100%;
   padding: 16px;
   box-sizing: border-box;
@@ -116,7 +120,9 @@ body {
 }
 
 .email,
-.password {
+.password,
+.name,
+.password-confirm {
   margin-top: 24px;
 }
 

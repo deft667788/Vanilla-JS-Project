@@ -1,11 +1,16 @@
 // A helper you may want to use when uploading new images to the server.
 
-import { login, swap } from "./login_regis.js";
+import { login, registration, swap } from "./login_regis.js";
 
 let signInButton = document.getElementById("sign-in-button");
 
 signInButton.addEventListener("click", () => {
   login();
+});
+
+const registerButton = document.getElementById("register-button");
+registerButton.addEventListener("click", () => {
+  registration();
 });
 
 //  sign in switch register
