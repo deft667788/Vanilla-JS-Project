@@ -1,22 +1,29 @@
+import { renderHomePage } from "./Basic_feed.js";
 import { errorPopup } from "./error_handle.js";
-import { fetch_request } from "./fetch.js";
+import { fetchPOST } from "./fetch.js";
 
 export function login() {
   // need to be modified later for fetch
   const emailField = document.getElementById("email").value;
-  //  console.log(emailField);
   const passwordField = document.getElementById("password").value;
-  //  console.log(passwordField);
+
+  if(emailField === "" || passwordField === "") {
+    errorPopup("Please enter your email and password!!!");
+    return;
+  }
 
   const successLogin = (data) => {
-    console.log(data.token);
-    console.log(data.userId);
-    document.getElementById("login-interface").classList.add("hidden");
+    if (localStorage.getItem("token") !== null) {
+      //  ensure the user logged in can access the data
+      localStorage.removeItem("token", data.token);
+      localStorage.setItem("token", data.token);
+    }
+
+    renderHomePage();
   };
 
-  fetch_request(
+  fetchPOST(
     "auth/login",
-    "POST",
     { email: emailField, password: passwordField },
     successLogin,
     "Your email and password don't match!!! Please try again"
@@ -34,14 +41,16 @@ export function registration() {
   }
 
   const successRegister = (data) => {
-    console.log(data.token);
-    console.log(data.userId);
-    document.getElementById("registration-interface").classList.add("hidden");
+    if (localStorage.getItem("token") !== null) {
+      localStorage.removeItem("token", data.token);
+      localStorage.setItem("token", data.token);
+    }
+    document.getElementById("Login").classList.add("hidden");
+    renderHomePage();
   };
   
-  fetch_request(
+  fetchPOST(
     "auth/register",
-    "POST",
     { email: userEmail, password: userPassword, name: userName },
     successRegister,
     "Invalid input"
