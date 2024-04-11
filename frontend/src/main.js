@@ -3,7 +3,6 @@
 import { login, registration, swap } from "./login_regis.js";
 
 const signInButton = document.getElementById("sign-in-button");
-
 signInButton.addEventListener("click", () => {
   login();
 });
