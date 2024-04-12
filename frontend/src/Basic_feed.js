@@ -1,9 +1,17 @@
 import { fetchGET } from "./fetch.js";
 
+
 export function ProcessCreatorId(creatorId) {
   function getAllInfo(data) {
-    localStorage.setItem("CreatorName", data.name);
-    localStorage.setItem("CreatorFollowers", data.watcheeUserIds.length);
+    let creatorName = document.getElementById("creatorName");
+    let creatorFollowers = document.getElementById("followers");
+
+    creatorName.textContent = data.name;
+    creatorFollowers.textContent =
+      data.watcheeUserIds.length + " followers";
+    
+    creatorName.removeAttribute("Id");
+    creatorFollowers.removeAttribute("Id");
   }
 
   fetchGET(
@@ -14,51 +22,71 @@ export function ProcessCreatorId(creatorId) {
 }
 
 export function AnalyzeTime(date) {
-  let NewDate = Date.parse(date);
-  //  console.log(NewDate.getDay());
+  const currentTime = Date.now();
+  const postTime = Date.parse(date);
+
+  const timeStamp = currentTime - postTime;
+  if (timeStamp > 86_400_000) {
+    //  post 24 hours ago
+    let retTime = new Date(postTime).toISOString();
+    retTime = retTime.substring(0, 10).split("-");
+    retTime = retTime[2] + "/" + retTime[1] + "/" + retTime[0];
+    return retTime;
+  } else {
+    //  post within 24 hours
+    const minutes = Math.trunc((timeStamp % 3_600_000) / 60_000);
+    const hours = Math.trunc(timeStamp / 3_600_000);
+    return hours + " hours" + minutes + " minutes ago";
+  }
 }
 
-export function renderEachPost(PostInfo) {
+export function renderEachPost(postInfo) {
   //  render all information for each post
 
-  let OldPost = document.getElementById("post-Template");
-  let NewPost = OldPost.cloneNode(true);
-  NewPost.removeAttribute("Id");
-  const CreatorContent = NewPost.childNodes[1];
-  const PostContent = NewPost.childNodes[3];
-
-  ProcessCreatorId(PostInfo.creatorId);
-  AnalyzeTime(PostInfo.createdAt);
+  let oldPost = document.getElementById("post-Template");
+  let newPost = oldPost.cloneNode(true);
+  newPost.removeAttribute("Id");
+  const creatorContent = newPost.childNodes[1];
+  const postContent = newPost.childNodes[3];
 
   //  Need to modify for insert image
-  const CreatorName = CreatorContent.childNodes[3].childNodes[1];
-  CreatorName.textContent = localStorage.getItem("CreatorName");
+  const creatorName = creatorContent.childNodes[3].childNodes[1];
+  creatorName.setAttribute("id", "creatorName");
 
-  const Followers = CreatorContent.childNodes[3].childNodes[3];
-  Followers.textContent =
-    localStorage.getItem("CreatorFollowers") + " followers";
+  const followers = creatorContent.childNodes[3].childNodes[3];
+  followers.setAttribute("id", "followers");
+  ProcessCreatorId(postInfo.creatorId);
 
-  const PostDate = CreatorContent.childNodes[3].childNodes[5];
-  PostDate.textContent = PostInfo.createdAt;
+  const postDate = creatorContent.childNodes[3].childNodes[5];
+  postDate.textContent = AnalyzeTime(postInfo.createdAt);
 
-  const JobTitle = PostContent.childNodes[1];
-  JobTitle.textContent = PostInfo.title;
+  const jobTitle = postContent.childNodes[1];
+  jobTitle.textContent = postInfo.title;
 
-  const StartDate = PostContent.childNodes[3];
-  StartDate.textContent = PostInfo.start;
+  const startDate = postContent.childNodes[3];
+  startDate.textContent = "Start at" + AnalyzeTime(postInfo.start);
 
-  const JobDescription = PostContent.childNodes[5];
-  JobDescription.textContent = PostInfo.description;
+  const jobDescription = postContent.childNodes[5];
+  jobDescription.textContent = postInfo.description;
 
-  const JobImage = PostContent.childNodes[7];
+  const jobImage = postContent.childNodes[7];
+  // jobImage.setAttribute("id", "jobImage");
+  // const file = document.querySelector('input[type="file"]').files;
 
-  const JobLikes = PostContent.childNodes[9];
-  JobLikes.textContent = PostInfo.likes.length;
+  // fileToDataUrl(file[0]).then((img) => {
+  //     let jobImg = document.getElementById("jobImage");
+  //     jobImg.src = img;
+  // });
 
-  const JobComments = PostContent.childNodes[11];
-  JobComments.textContent = PostInfo.comments.length;
+  // jobImage.removeAttribute("id");
 
-  document.getElementById("post").insertBefore(NewPost, OldPost);
+  const jobLikes = postContent.childNodes[9];
+  jobLikes.textContent = postInfo.likes.length;
+
+  const jobComments = postContent.childNodes[11];
+  jobComments.textContent = postInfo.comments.length;
+
+  document.getElementById("post").insertBefore(newPost, oldPost);
   //  Insert the newly created node ahead of template node each time
 }
 
@@ -66,7 +94,6 @@ export function renderHomePage() {
   document.getElementById("login").classList.add("Hidden");
   document.getElementById("homepage").classList.remove("Hidden");
   const renderPost = (data) => {
-    alert(`There are ${data.length} posts`);
     //  TODO:debugging
     for (let item of data) {
       renderEachPost(item);
