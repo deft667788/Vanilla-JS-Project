@@ -45,8 +45,8 @@ export function registration() {
       localStorage.removeItem("token", data.token);
     }
     localStorage.setItem("token", data.token);
-    
-    document.getElementById("Login").classList.add("hidden");
+
+    document.getElementById("login").classList.add("Hidden");
     renderHomePage();
   };
   
@@ -60,6 +60,6 @@ export function registration() {
 
 // sign in switch register
 export function swap(page1, page2) {
-  document.getElementById(page1).classList.add("hidden");
-  document.getElementById(page2).classList.remove("hidden");
+  document.getElementById(page1).classList.add("Hidden");
+  document.getElementById(page2).classList.remove("Hidden");
 }

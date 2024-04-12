@@ -21,7 +21,7 @@ export function AnalyzeTime(date) {
 export function renderEachPost(PostInfo) {
   //  render all information for each post
 
-  let OldPost = document.getElementById("Post-Template");
+  let OldPost = document.getElementById("post-Template");
   let NewPost = OldPost.cloneNode(true);
   NewPost.removeAttribute("Id");
   const CreatorContent = NewPost.childNodes[1];
@@ -63,8 +63,8 @@ export function renderEachPost(PostInfo) {
 }
 
 export function renderHomePage() {
-  document.getElementById("Login").classList.add("hidden");
-  document.getElementById("Homepage").classList.remove("hidden");
+  document.getElementById("login").classList.add("Hidden");
+  document.getElementById("homepage").classList.remove("Hidden");
   const renderPost = (data) => {
     alert(`There are ${data.length} posts`);
     //  TODO:debugging
