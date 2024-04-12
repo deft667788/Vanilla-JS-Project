@@ -70,22 +70,14 @@ export function renderEachPost(postInfo) {
   jobDescription.textContent = postInfo.description;
 
   const jobImage = postContent.childNodes[7];
-  // jobImage.setAttribute("id", "jobImage");
-  // const file = document.querySelector('input[type="file"]').files;
-
-  // fileToDataUrl(file[0]).then((img) => {
-  //     let jobImg = document.getElementById("jobImage");
-  //     jobImg.src = img;
-  // });
-
-  // jobImage.removeAttribute("id");
   jobImage.src = postInfo.image;
 
   const jobLikes = postContent.childNodes[9];
-  jobLikes.textContent = postInfo.likes.length;
+  jobLikes.textContent = "Likes: " + postInfo.likes.length;
+  console.log(typeof postInfo.likes);
 
   const jobComments = postContent.childNodes[11];
-  jobComments.textContent = postInfo.comments.length;
+  jobComments.textContent = "Comments: " + postInfo.comments.length;
 
   document.getElementById("post").insertBefore(newPost, oldPost);
   //  Insert the newly created node ahead of template node each time

@@ -1,5 +1,5 @@
-import { renderHomePage } from "./Basic_feed.js";
 import { errorPopup } from "./error_handle.js";
+import { renderHomePage } from "./feed.js";
 import { fetchPOST } from "./fetch.js";
 
 export function login() {
