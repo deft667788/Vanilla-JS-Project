@@ -79,6 +79,7 @@ export function renderEachPost(postInfo) {
   // });
 
   // jobImage.removeAttribute("id");
+  jobImage.src = postInfo.image;
 
   const jobLikes = postContent.childNodes[9];
   jobLikes.textContent = postInfo.likes.length;
