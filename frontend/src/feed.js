@@ -1,6 +1,5 @@
 import { fetchGET } from "./fetch.js";
 
-
 export function ProcessCreatorId(creatorId) {
   function getAllInfo(data) {
     let creatorName = document.getElementById("creatorName");
@@ -43,9 +42,9 @@ export function AnalyzeTime(date) {
 export function renderEachPost(postInfo) {
   //  render all information for each post
 
-  let oldPost = document.getElementById("post-Template");
+  let oldPost = document.getElementById("post-template");
   let newPost = oldPost.cloneNode(true);
-  newPost.removeAttribute("Id");
+  newPost.removeAttribute("id");
   const creatorContent = newPost.childNodes[1];
   const postContent = newPost.childNodes[3];
 
@@ -69,14 +68,14 @@ export function renderEachPost(postInfo) {
   const jobDescription = postContent.childNodes[5];
   jobDescription.textContent = postInfo.description;
 
-  const jobImage = postContent.childNodes[7];
+  const jobImage = newPost.childNodes[5];
   jobImage.src = postInfo.image;
 
-  const jobLikes = postContent.childNodes[9];
+  const jobLikes = newPost.childNodes[7];
   jobLikes.textContent = "Likes: " + postInfo.likes.length;
   console.log(typeof postInfo.likes);
 
-  const jobComments = postContent.childNodes[11];
+  const jobComments = newPost.childNodes[9];
   jobComments.textContent = "Comments: " + postInfo.comments.length;
 
   document.getElementById("post").insertBefore(newPost, oldPost);

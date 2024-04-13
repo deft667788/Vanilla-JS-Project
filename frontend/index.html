@@ -36,9 +36,6 @@
                   placeholder="Email or Phone"
                   value="betty@email.com"
                 />
-                <!-- <label class="label-for-email" for="email"
-                  >Email or Phone</label
-                > -->
               </div>
 
               <div class="Password">
@@ -51,6 +48,16 @@
                 />
               </div>
 
+              <div class="Rem-div">
+                <div>
+                  <input id="remember-me" name="remember-me" type="checkbox" />
+                  <label for="remember-me">Remember me</label>
+                </div>
+                <div>
+                  <div class="Switch-btn Forgot-btn">Forgot password?</div>
+                </div>
+              </div>
+
               <div class="Sign-in">
                 <input
                   type="submit"
@@ -58,17 +65,16 @@
                   value="Sign in"
                 />
               </div>
-              <hr class="hr" />
+              <div class="Join-switch">
+                New to LurkForWork?
+                <button
+                  class="Switch-btn join-switch"
+                  id="switch-join-btn"
+                >
+                  Join now
+                </button>
+              </div>
             </div>
-          </div>
-          <div class="Join-switch">
-            New to LurkForWork?
-            <button
-              class="Switch-btn join-switch"
-              id="switch-join-btn"
-            >
-              Join now
-            </button>
           </div>
         </main>
       </div>
@@ -117,16 +123,15 @@
                 value="Join in now"
               />
             </div>
-            <hr class="hr" />
-          </div>
-          <div class="Join-switch">
-            Already on LurkForWork?
-            <button
-              class="Switch-btn join-switch"
-              id="switch-sign-btn"
-            >
-              Sign in
-            </button>
+            <div class="Join-switch">
+              Already on LurkForWork?
+              <button
+                class="Switch-btn join-switch"
+                id="switch-sign-btn"
+              >
+                Sign in
+              </button>
+            </div>
           </div>
         </main>
       </div>
@@ -135,8 +140,11 @@
     <div id="homepage" class="Hidden">
       <header id="Menu-bar">
         <div id="Menu-items">
-          <div class="Logo">Work</div>
-          <input type="text" spaceholder="Search" />
+          <div class="Homepage-Logo">Work</div>
+          <div id="search-div">
+            <input id="search" type="text" placeholder="Search" />
+          </div>
+
           <button>Home</button>
           <button>My Network</button>
           <button>Jobs</button>
@@ -169,23 +177,23 @@
           <hr class="Feed-border" />
           
           <div id="post">
-            <div id="post-Template" class="Homepage-Item">
-              <div class="Creator-Content">
-                <src class="Creator-Img"></src>
-                <div class="Creater-Info">
-                  <p class="Creator-Name"></p>
+            <div id="post-template" class="Homepage-Item">
+              <div class="Creator-content">
+                <src class="Creator-img"></src>
+                <div class="Creater-info">
+                  <p class="Creator-name"></p>
                   <p class="Followers"></p>
-                  <p class="Post-Date"></p>
+                  <p class="Post-date"></p>
                 </div>
               </div>
-              <div class="Post-Content">
-                <p class="Job-Title"></p>
-                <p class="Start-Date"></p>
-                <p class="Job-Description"></p>
-                <img class="Job-Image" width="200px"></img>
-                <p class="Likes"></p>
-                <p class="Comments"></p>
+              <div class="Post-content">
+                <p class="Job-title"></p>
+                <p class="Start-date"></p>
+                <p class="Job-description"></p>
               </div>
+              <img class="Job-Image"></img>
+              <p class="Likes"></p>
+              <p class="Comments"></p>
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@ export function login() {
   const passwordField = document.getElementById("password").value;
 
   if(emailField === "" || passwordField === "") {
-    errorPopup("Please enter your email and password!!!");
+    errorPopup("Please input your email and password");
     return;
   }
 
@@ -26,7 +26,7 @@ export function login() {
     "auth/login",
     { email: emailField, password: passwordField },
     successLogin,
-    "Your email and password don't match!!! Please try again"
+    "Invalid Email and Password."
   );
 }
 
@@ -36,7 +36,7 @@ export function registration() {
   const userPassword = document.getElementById("regis-password").value;
   const confirmPassword = document.getElementById("password-confirm").value;
   if (userPassword !== confirmPassword) {
-    errorPopup("Your two passwords don't match!!! Please try again");
+    errorPopup("Passwords do not match!");
     return;
   }
 
