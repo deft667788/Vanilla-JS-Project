@@ -50,11 +50,17 @@
 
               <div class="Rem-div">
                 <div>
-                  <input id="remember-me" name="remember-me" type="checkbox" />
+                  <input
+                    id="remember-me"
+                    name="remember-me"
+                    type="checkbox"
+                  />
                   <label for="remember-me">Remember me</label>
                 </div>
                 <div>
-                  <div class="Switch-btn Forgot-btn">Forgot password?</div>
+                  <div class="Switch-btn Forgot-btn">
+                    Forgot password?
+                  </div>
                 </div>
               </div>
 
@@ -138,8 +144,8 @@
     </div>
 
     <div id="homepage" class="Hidden">
-      <header id="Menu-bar">
-        <div id="Menu-items">
+      <header id="menu-bar">
+        <div id="menu-items">
           <div class="Homepage-Logo">Work</div>
           <div id="search-div">
             <input id="search" type="text" placeholder="Search" />
@@ -179,25 +185,42 @@
           <div id="post">
             <div id="post-template" class="Homepage-Item">
               <div class="Creator-content">
-                <src class="Creator-img"></src>
+                <div class="Creator-img"></div>
                 <div class="Creater-info">
-                  <p class="Creator-name"></p>
-                  <p class="Followers"></p>
-                  <p class="Post-date"></p>
+                  <span class="Creator-name"></span>
+                  <div class="Followers"></div>
+                  <div class="Post-date"></div>
                 </div>
               </div>
               <div class="Post-content">
-                <p class="Job-title"></p>
-                <p class="Start-date"></p>
-                <p class="Job-description"></p>
+                <span class="Job-title"></span>
+                <div class="Start-date"></div>
+                <div class="Job-description"></div>
               </div>
-              <img class="Job-Image"></img>
-              <p class="Likes"></p>
-              <p class="Comments"></p>
+              <img class="Job-Image" alt="Job-image"></img>
+              <div class="Likes&Comment">
+                <p class="Likes"></p>
+                <div class="Like-user Hidden"></div>
+                <p class="Comments"></p>
+                <div class="Comment Hidden"></div>
+                <div class="Function">
+                  <button class="Like">
+                    Like this Post!!!
+                  </button>
+                  <button class="Comment">
+                    I wanna comment
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         
+        <div id="comment-template" class="Each-comment">
+          <span class="User-post-comment User-name"></span>
+          <p class="User-comment"></p>
+        </div>
+
         <div id="news">
           <div id="work-news" class="Homepage-Item">News</div>
           <div id="promoted" class="Homepage-Item">Promoted</div>

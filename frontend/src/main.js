@@ -1,9 +1,14 @@
 // A helper you may want to use when uploading new images to the server.
 
+
+
 import { login, registration, swap } from "./login_regis.js";
 
 const signInButton = document.getElementById("sign-in-button");
+
+localStorage.clear();
 localStorage.setItem("Page", 0);
+
 signInButton.addEventListener("click", () => {
   login();
 });

@@ -292,33 +292,33 @@ body {
 
 @media (max-width: 1200px) {
   #homepage-content {
-    width: 960px;
+      width: 960px;
   }
 }
 
 @media (max-width: 992px) {
   #homepage-content {
-    width: 720px;
-    display: grid;
-    grid-template-columns: 300px auto;
-    grid-template-areas:
-      "sidebar posts"
-      ". aside";
-    column-gap: 22px;
+      width: 720px;
+      display: grid;
+      grid-template-columns: 300px auto;
+      grid-template-areas:
+          "sidebar posts"
+          ". aside";
+      column-gap: 22px;
   }
 }
 
 @media (max-width: 768px) {
   #homepage-content {
-    width: 576px;
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-    grid-template-areas:
-      "sidebar"
-      "posts"
-      "aside";
-    column-gap: 22px;
+      width: 576px;
+      display: grid;
+      grid-template-columns: auto;
+      grid-template-rows: auto;
+      grid-template-areas:
+          "sidebar"
+          "posts"
+          "aside";
+      column-gap: 22px;
   }
 }
 
@@ -408,4 +408,14 @@ body {
   object-position: center;
   object-fit: cover;
   margin-bottom: 20px;
+}
+
+/* viewing comments and users who like this post */
+.Likes:hover,
+.Comments:hover,
+.User-name:hover {
+  cursor: pointer;
+}
+
+.Function {
 }

@@ -18,6 +18,7 @@ export function login() {
       localStorage.removeItem("token", data.token);
     }
     localStorage.setItem("token", data.token);
+    localStorage.setItem("loginUser", data.userId);
 
     renderHomePage();
   };
@@ -45,6 +46,7 @@ export function registration() {
       localStorage.removeItem("token", data.token);
     }
     localStorage.setItem("token", data.token);
+    localStorage.setItem("loginUser", data.userId);
 
     document.getElementById("login").classList.add("Hidden");
     renderHomePage();
