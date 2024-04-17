@@ -116,6 +116,16 @@ export function addUserintoLikes(loginUser, likeList, postInfoid) {
 
 export function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
   //  request like this post to server
+  const loginUser = localStorage.getItem("loginUser");
+  const likeList = getMemberLikeList(postInfo.id);
+
+  //  Initialize default field for like button
+  if (likeList.includes(loginUser) === false) {
+    likeButton.textContent = "Like this Post!!!";
+  } else {
+    likeButton.textContent = "Unlike this Post";
+  }
+
   likeButton.addEventListener("click", () => {
     const loginUser = localStorage.getItem("loginUser");
     const userName = localStorage.getItem(loginUser);
@@ -181,7 +191,7 @@ export function renderEachPost(postInfo) {
 
   const creatorImg = creatorContent.childNodes[1];
   renderUserImge(creatorImg, postInfo.creatorId);
-  
+
   const creatorName = creatorContent.childNodes[3].childNodes[1];
   creatorName.classList.add("User-name");
 
@@ -251,6 +261,7 @@ export function renderEachPost(postInfo) {
   likeJob(likeButton, postInfo, jobLikes, likeUsers);
 
   addEventForEachName(newPost);
+
   document.getElementById("post").insertBefore(newPost, oldPost);
   //  Insert the newly created node ahead of template node each time
 }
@@ -264,6 +275,9 @@ export function renderHomePage() {
       renderEachPost(item);
     }
   };
+
+  //  addEventForMyname();
+
   let currentPage = localStorage.getItem("Page");
   localStorage.setItem("Page", Number(currentPage) + 5);
   //  Update page to retrieve next 5 Posts next time
