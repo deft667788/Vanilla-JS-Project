@@ -1,6 +1,9 @@
 import { fetchGET, fetchPUT } from "./fetch.js";
-import { addEventForEachName } from "./viewProfile.js";
 
+import {
+  addEventForEachName,
+  addEventForMyname
+} from "./viewProfile.js";
 
 export function processCreatorId(creatorId, creatorName, creatorFollowers) {
   function getAllInfo(data) {
@@ -276,7 +279,7 @@ export function renderHomePage() {
     }
   };
 
-  //  addEventForMyname();
+  addEventForMyname();
 
   let currentPage = localStorage.getItem("Page");
   localStorage.setItem("Page", Number(currentPage) + 5);
