@@ -91,7 +91,7 @@ export function processUserInfo(data) {
     }
 }
 
-export function processCloseButton() {
+/* export function processCloseButton() {
   //  Config button to close profile
   const closeButton = document.getElementById("close-profile");
 
@@ -100,7 +100,7 @@ export function processCloseButton() {
     document.getElementById("profile-template").classList.add("Hidden");
     document.getElementById("homepage-content").classList.remove("Hidden");
   });
-}
+} */
 
 export function processWatchButton(data) {
   const watchButton = document.getElementById("watch-and-unwatch-user");
