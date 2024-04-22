@@ -7,6 +7,7 @@ export function getWatchingUser(userId, watchedList) {
     .getElementById("like-user-template")
     .cloneNode(true);
   userNode.removeAttribute("id");
+  userNode.classList.remove("Hidden");
 
   const userImgNode = userNode.childNodes[1];
   const userNameNode = userNode.childNodes[3];
@@ -41,11 +42,15 @@ export function clearWatchList() {
   }
 }
 
-export function processUserInfoAfterFetch(data) {
+export function processUserInfo(data) {
+  //  Remove homepage and render profile page
   document.getElementById("profile-template").classList.remove("Hidden");
+  document.getElementById("homepage-content").classList.add("Hidden");
+
   document.getElementById("profile-user-img").src = data.image;
   document.getElementById("profile-user-name").textContent = data.name;
   document.getElementById("profile-user-id").textContent = data.id;
+
   document.getElementById("profile-user-email").textContent = data.email;
   document.getElementById("profile-user-watched-by").textContent =
     "watched by " +
@@ -84,20 +89,20 @@ export function processUserInfoAfterFetch(data) {
         watchButton.textContent = "unwatch";
       }
     }
-
-    console.log(data.jobs);
 }
 
-export function processCloseButtonAfterFetch() {
+export function processCloseButton() {
   //  Config button to close profile
   const closeButton = document.getElementById("close-profile");
 
+  //  Remove profile page and render homepage
   closeButton.addEventListener("click", () => {
     document.getElementById("profile-template").classList.add("Hidden");
+    document.getElementById("homepage-content").classList.remove("Hidden");
   });
 }
 
-export function processWatchButtonAfterFetch() {
+export function processWatchButton(data) {
   const watchButton = document.getElementById("watch-and-unwatch-user");
   let watcheeListIds = data.watcheeUserIds;
   const watchedList = document.getElementById("profile-watched-by-list");
@@ -142,7 +147,6 @@ export function processWatchButtonAfterFetch() {
       );
     }
   }
-
   watchButton.addEventListener("click", myfunc);
 
   setTimeout(() => {
@@ -164,9 +168,9 @@ export function processWatchButtonAfterFetch() {
 
 export function renderProfile(userName) {
   function successFetchInfo(data) {
-    processUserInfoAfterFetch(data);
-    processWatchButtonAfterFetch(data);
-    processCloseButtonAfterFetch();
+    processUserInfo(data);
+    processWatchButton(data);
+    //  processCloseButton();
   }
 
   const userId = localStorage.getItem(userName);
@@ -180,7 +184,7 @@ export function renderProfile(userName) {
 export function addEventForEachName(newPost) {
   const userArr = newPost.getElementsByClassName("User-name");
   for (const ele of userArr) {
-    //  Add eventlistener for each each user name
+    //  Add eventlistener for each user name
     ele.addEventListener("click", () => {
       renderProfile(ele.textContent);
     });
