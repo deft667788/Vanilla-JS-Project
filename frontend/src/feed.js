@@ -1,5 +1,4 @@
 import { fetchGET, fetchPUT } from "./fetch.js";
-
 import {
   addEventForEachName,
   addEventForMyname
@@ -30,18 +29,18 @@ export function analyzeTime(date) {
   const postTime = Date.parse(date);
   const timeStamp = currentTime - postTime;
   if (timeStamp > 86_400_000) {
-    //  post 24 hours ago
+    // post 24 hours ago
     let retTime = new Date(postTime).toISOString();
     retTime = retTime.substring(0, 10).split("-");
     retTime = retTime[2] + "/" + retTime[1] + "/" + retTime[0];
     return retTime;
   } else if (3_600_000 < timeStamp < 86_400_000) {
-    //  post within 24 hours
+    // post within 24 hours
     const minutes = Math.trunc((timeStamp % 3_600_000) / 60_000);
     const hours = Math.trunc(timeStamp / 3_600_000);
-    return hours + " hours" + minutes + " minutes ago";
+    return hours + " hours " + minutes + " minutes ago";
   } else {
-    //  post within last 1 hour
+    // post within last 1 hour
     const minutes = Math.trunc((timeStamp % 3_600_000) / 60_000);
     return minutes + " minutes ago";
   }
@@ -67,13 +66,13 @@ export function processUserLikes(user, likeUsers) {
 export function processEachComment(comment, commentContent) {
   let node = document.getElementById("comment-template").cloneNode(true);
   node.removeAttribute("id");
-  
+
   const userImgNode = node.childNodes[1];
   const userId = localStorage.getItem(comment.userName);
   renderUserImge(userImgNode, userId);
-  //  add user img for each user
-  node.childNodes[3].textContent = comment.userName;
-  node.childNodes[5].textContent = comment.comment;
+  // add user img for each user
+  node.childNodes[3].childNodes[1].textContent = comment.userName;
+  node.childNodes[3].childNodes[3].textContent = comment.comment;
   commentContent.appendChild(node);
 }
 
@@ -110,7 +109,7 @@ export function addUserintoLikes(loginUser, likeList, postInfoid) {
   let retStr = "";
   retStr = retStr + " " + loginUser;
   for (const item of likeList) {
-    retStr = rerStr + " " + item;
+    retStr = retStr + " " + item;
   }
 
   const likeMemberList = postInfoid + " Member List";
@@ -118,11 +117,11 @@ export function addUserintoLikes(loginUser, likeList, postInfoid) {
 }
 
 export function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
-  //  request like this post to server
+  // request like this post to server
   const loginUser = localStorage.getItem("loginUser");
   const likeList = getMemberLikeList(postInfo.id);
 
-  //  Initialize default field for like button
+  // initialize default field for like button
   if (likeList.includes(loginUser) === false) {
     likeButton.textContent = "Like this Post!!!";
   } else {
@@ -142,13 +141,12 @@ export function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
       );
       removeUserFromLikes(loginUser, likeList, postInfo.id);
       likeButton.textContent = "Like this Post!!!";
-      let currentNumberUserLike =
-        getNumberUserLikes(jobLikes.textContent) - 1;
-      
+      let currentNumberUserLike = getNumberUserLikes(jobLikes.textContent) - 1;
+
       for (let item of userList) {
         if (item.childNodes[3].textContent == userName) {
           item.remove();
-          //  Delete user who just like the post
+          // delete user who just like the post
         }
       }
 
@@ -161,9 +159,8 @@ export function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
       );
       addUserintoLikes(loginUser, likeList, postInfo.id);
       likeButton.textContent = "Unlike this Post";
-      let currentNumberUserLike =
-        getNumberUserLikes(jobLikes.textContent) + 1;
-      
+      let currentNumberUserLike = getNumberUserLikes(jobLikes.textContent) + 1;
+
       processUserLikes(userName, likeUsers);
 
       jobLikes.textContent = "Like: " + currentNumberUserLike;
@@ -184,8 +181,8 @@ export function renderUserImge(imgNode, userId) {
 }
 
 export function renderEachPost(postInfo) {
-  //  render all information for each post
-  //  console.log(postInfo);
+  // render all information for each post
+  // console.log(postInfo);
   let oldPost = document.getElementById("post-template");
   let newPost = oldPost.cloneNode(true);
   newPost.removeAttribute("id");
@@ -208,7 +205,7 @@ export function renderEachPost(postInfo) {
   jobTitle.textContent = postInfo.title;
 
   const startDate = postContent.childNodes[3];
-  startDate.textContent = "Start at" + analyzeTime(postInfo.start);
+  startDate.textContent = "Start at " + analyzeTime(postInfo.start);
 
   const jobDescription = postContent.childNodes[5];
   jobDescription.textContent = postInfo.description;
@@ -218,7 +215,8 @@ export function renderEachPost(postInfo) {
 
   const likeAndComment = newPost.childNodes[7];
 
-  const jobLikes = likeAndComment.childNodes[1];
+  // like & comment
+  const jobLikes = likeAndComment.childNodes[1].childNodes[1];
   jobLikes.textContent = "Likes: " + postInfo.likes.length;
 
   const likeUsers = likeAndComment.childNodes[3];
@@ -233,7 +231,7 @@ export function renderEachPost(postInfo) {
   localStorage.setItem(likeMemberList, userStr);
 
   jobLikes.addEventListener("click", () => {
-    //  implement a toggle to switch between hide and show
+    // implement a toggle to switch between hide and show
     if (likeUsers.classList.contains("Hidden")) {
       likeUsers.classList.remove("Hidden");
     } else {
@@ -241,16 +239,16 @@ export function renderEachPost(postInfo) {
     }
   });
 
-  const jobComments = newPost.childNodes[5];
+  const jobComments = likeAndComment.childNodes[1].childNodes[3];
   jobComments.textContent = "Comments: " + postInfo.comments.length;
 
-  const commentContent = likeAndComment.childNodes[7];
+  const commentContent = likeAndComment.childNodes[5];
   for (const comment of postInfo.comments) {
     processEachComment(comment, commentContent);
   }
 
   jobComments.addEventListener("click", () => {
-    //  implement a toggle to switch between hide and show
+    // implement a toggle to switch between hide and show
     if (commentContent.classList.contains("Hidden")) {
       commentContent.classList.remove("Hidden");
     } else {
@@ -258,22 +256,21 @@ export function renderEachPost(postInfo) {
     }
   });
 
-  const functionSection = likeAndComment.childNodes[9];
+  const functionSection = likeAndComment.childNodes[7];
   const likeButton = functionSection.childNodes[1];
   const secondButton = functionSection.childNodes[3];
   likeJob(likeButton, postInfo, jobLikes, likeUsers);
 
   addEventForEachName(newPost);
-
   document.getElementById("post").insertBefore(newPost, oldPost);
-  //  Insert the newly created node ahead of template node each time
+  // insert the newly created node ahead of template node each time
 }
 
 export function renderHomePage() {
   document.getElementById("login").classList.add("Hidden");
   document.getElementById("homepage").classList.remove("Hidden");
   const renderPost = (data) => {
-    //  TODO:debugging
+    // for debugging
     for (let item of data) {
       renderEachPost(item);
     }
@@ -283,7 +280,7 @@ export function renderHomePage() {
 
   let currentPage = localStorage.getItem("Page");
   localStorage.setItem("Page", Number(currentPage) + 5);
-  //  Update page to retrieve next 5 Posts next time
+  // update page to retrieve next 5 Posts next time
 
   fetchGET(
     `job/feed?start=${currentPage}`,

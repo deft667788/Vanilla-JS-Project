@@ -50,33 +50,20 @@
 
               <div class="Rem-div">
                 <div>
-                  <input
-                    id="remember-me"
-                    name="remember-me"
-                    type="checkbox"
-                  />
+                  <input id="remember-me" name="remember-me" type="checkbox" />
                   <label for="remember-me">Remember me</label>
                 </div>
                 <div>
-                  <div class="Switch-btn Forgot-btn">
-                    Forgot password?
-                  </div>
+                  <div class="Switch-btn Forgot-btn">Forgot password?</div>
                 </div>
               </div>
 
               <div class="Sign-in">
-                <input
-                  type="submit"
-                  id="sign-in-button"
-                  value="Sign in"
-                />
+                <input type="submit" id="sign-in-button" value="Sign in" />
               </div>
               <div class="Join-switch">
                 New to LurkForWork?
-                <button
-                  class="Switch-btn join-switch"
-                  id="switch-join-btn"
-                >
+                <button class="Switch-btn Join-switch" id="switch-join-btn">
                   Join now
                 </button>
               </div>
@@ -101,11 +88,7 @@
               />
             </div>
             <div class="Name">
-              <input
-                type="text"
-                id="regis-name"
-                placeholder="Name"
-              />
+              <input type="text" id="regis-name" placeholder="Name" />
             </div>
             <div class="Password">
               <input
@@ -123,18 +106,11 @@
             </div>
 
             <div class="Sign-in">
-              <input
-                type="submit"
-                id="register-button"
-                value="Join in now"
-              />
+              <input type="submit" id="register-button" value="Join in now" />
             </div>
             <div class="Join-switch">
               Already on LurkForWork?
-              <button
-                class="Switch-btn join-switch"
-                id="switch-sign-btn"
-              >
+              <button class="Switch-btn Join-switch" id="switch-sign-btn">
                 Sign in
               </button>
             </div>
@@ -181,12 +157,12 @@
             </div>
           </div>
           <hr class="Feed-border" />
-          
+
           <div id="post">
             <div id="post-template" class="Homepage-Item">
               <div class="Creator-content">
-                <img class="Creator-img" alt="Creator-img" />
-                <div class="Creater-info">
+                <img class="User-img" alt="Creator-img" />
+                <div class="Creator-info">
                   <span class="Creator-name"></span>
                   <div class="Followers"></div>
                   <div class="Post-date"></div>
@@ -197,17 +173,31 @@
                 <div class="Start-date"></div>
                 <div class="Job-description"></div>
               </div>
-              <img class="Job-Image" alt="Job-image"></img>
-              <div class="Likes&Comment">
-                <p class="Likes"></p>
+              <img class="Job-image" alt="Job-image" />
+              <div class="Likes-comment">
+                <div class="Like-comment-div">
+                  <span class="Likes"></span>
+                  <span class="Comments"></span>
+                </div>
+
                 <div class="Like-user Hidden"></div>
-                <p class="Comments"></p>
                 <div class="Comment Hidden"></div>
+
                 <div class="Function">
-                  <button class="Like"></button>
-                  <button class="Comment">
-                    I wanna comment
-                  </button>
+                  <div class="Like">
+                    Like
+                    <!-- <svg id="Thumb-up" stroke="#6B6C6E" stroke-width="1">
+                      <path
+                        d="M18,20 L2.9,20 C0.1,20 0,22.1 0,24.8 L0,49.1 C0,51.7 0.1,53.9 2.9,53.9 L18,53.9 C20.8,53.9 20.9,51.8 20.9,49.1 L20.9,24.8 C20.9,22.2 20.8,20 18,20 L18,20 Z"
+                        id="Shape"
+                      ></path>
+                      <path
+                        d="M20.7,50.3 L22.1,50.3 C25.9,50.2 28.4,56 31.3,56 L53.9,56 C56.7,56 57.3,51.8 57.2,50 C57.2,50 60.7,48.4 59.1,42 C59.3,41.9 61.1,40.2 61.1,36.9 C61.1,33.6 59.2,32 59.2,32 C59.2,32 61.1,29.9 61.1,26.8 C61.1,23.7 58.4,22 55.6,22 L47.3,22 C40.1,22 40.7,18.1 40.7,18.1 C40.7,18.1 39.9,8 37.3,3.3 C34.1,-2.5 27.7,-0.6 30.1,7 C31.9,12.6 23.8,21 20.8,23.8"
+                        id="Shape"
+                      ></path></svg
+                    ><span>Like</span> -->
+                  </div>
+                  <button class="Comment">Comment</button>
                 </div>
               </div>
             </div>
@@ -220,35 +210,41 @@
         </div>
       </main>
     </div>
-    
+
     <div id="like-user-template" class="Each-user-watching">
-      <img class="user-like-img" />
-      <p class="user-like-name User-name"></p>
+      <img class="User-img" />
+      <span class="Like-name User-name"></span>
     </div>
 
     <div id="comment-template" class="Each-comment">
-      <img class="user-post-img" />
-      <span class="User-post-comment User-name"></span>
-      <p class="User-comment"></p>
+      <img class="User-img User-name" />
+      <div class="User-comment-div">
+        <span class="User-post-comment User-name"></span>
+        <div class="User-comment"></div>
+      </div>
     </div>
 
     <!-- popup window each time we render user profile -->
-    <div id="profile-template" class="Hidden">
+    <!-- touch the top search bar should also inspect the email you search for , if exist render this page, if not popup error-->
+    <div id="profile-page" class="Hidden">
       <div id="profile-user-info">
         <img id="profile-user-img" alt="user image" />
-        <p id="profile-user-name" class="User-name"></p>
-        <p id="profile-user-id"></p>
-        <p id="profile-user-email"></p>
-        <p id="profile-user-watched-by"></p>
-        <div id="profile-user-watched-by-list"></div>
+        <div id="profile-user-name" class="User-name"></div>
+        <!-- Id is only used to show the name -->
+        <!-- <div id="profile-user-id"></div> -->
+        <div id="profile-user-email"></div>
+        <div id="profile-user-watched-by"></div>
+        <button id="watch-and-unwatch-user"></button>
+      </div>
+      <div id="profile-watched-by-list-div">
+        <div id="profile-watched-by-list"></div>
       </div>
       <div id="profile-jobs-info"></div>
-
-      <button id="close-profile">close profile window</button>
-
-      <button id="watch-and-unwatch-user"></button>
+      <!--When click the top left side Work logo, hiiden the profile-page  -->
+      <!-- <button id="close-profile">close profile window</button> -->
     </div>
 
+    <!-- When click on the top menu bar "me" button show this block as a toggle -->
     <div id="update-profile" class="Hidden">
       <label for="new-email">Your new email</label>
       <input type="text" id="new-email" /><br />
@@ -260,7 +256,7 @@
       <input type="file" id="new-img" /><br />
       <button id="upload-info">update profile</button>
     </div>
-    
+
     <div id="error-box" class="Hidden">
       <p id="error-message"></p>
       <button id="close-error-window">close this window</button>
