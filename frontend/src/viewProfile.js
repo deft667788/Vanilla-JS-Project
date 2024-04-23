@@ -1,5 +1,8 @@
 //  This file is for milestone4, related to how to render user profile
+import { errorPopup } from "./error_handle.js";
+import { analyzeTime } from "./feed.js";
 import { fetchGET, fetchPUT } from "./fetch.js";
+import { fileToDataUrl } from "./helpers.js";
 
 export function getWatchingUser(userId, watchedList) {
   //  Copy and process the template
@@ -89,6 +92,8 @@ export function processUserInfo(data) {
         watchButton.textContent = "unwatch";
       }
     }
+
+    //  statr process jobs
 }
 
 /* export function processCloseButton() {
@@ -147,6 +152,10 @@ export function processWatchButton(data) {
       );
     }
   }
+  //  remove event listener for previous profile
+  watchButton.addEventListener("click", myfunc);
+
+  //  add event listener for current profile
   watchButton.addEventListener("click", myfunc);
 
   setTimeout(() => {
@@ -166,9 +175,48 @@ export function processWatchButton(data) {
   }, 100);
 }
 
+export function processJob(data) {
+  const jobs = data.jobs;
+  for (let job of jobs) {
+    const newJob = document.createElement("div");
+
+    const newJobNode = document
+      .getElementById("profile-post-template")
+      .cloneNode(true);
+    newJobNode.classList.remove("Hidden");
+
+    const PostContent = newJobNode.childNodes[1].cloneNode(true);
+    const PostImg = newJobNode.childNodes[3].cloneNode(true);
+    //  clone necessary node from post-template
+
+    //  Job-post-date
+    PostContent.childNodes[1].textContent = analyzeTime(job.createdAt);
+
+    //  Job-title
+    PostContent.childNodes[3].textContent = job.title;
+
+    //  Start-date
+    PostContent.childNodes[5].textContent = analyzeTime(job.start);
+
+    //  Job-description
+    PostContent.childNodes[7].textContent = job.description;
+
+    //  Job-image
+    PostImg.src = job.image;
+
+    newJob.append(PostContent);
+    newJob.append(PostImg);
+
+    document.getElementById("profile-jobs-info").append(newJob);
+    //  Append new job to container
+  }
+}
+
 export function renderProfile(userName) {
   function successFetchInfo(data) {
+    //  bug exists when jump and watch between different users
     processUserInfo(data);
+    processJob(data);
     processWatchButton(data);
     //  processCloseButton();
   }
@@ -198,5 +246,102 @@ export function addEventForMyname() {
     const myId = localStorage.getItem("loginUser");
     const myName = localStorage.getItem(myId);
     renderProfile(myName);
+  });
+}
+
+export function updateProfile() {
+  const updateProfileButton = document.getElementById("update-profile-button");
+  const closeProfileButton = document.getElementById("close-upload-window");
+  const uploadProfileButton = document.getElementById("upload-info");
+
+  updateProfileButton.addEventListener("click", () => {
+    //  Pop up update profile window
+    const updateProfile = document.getElementById("update-profile");
+    updateProfile.classList.remove("Hidden");
+
+    //  Refresh content of all fields, to re-enter new info
+    document.getElementById("new-email").value = "";
+    document.getElementById("new-password").value = "";
+    document.getElementById("new-name").value = "";
+  });
+
+  closeProfileButton.addEventListener("click", () => {
+    //  close update profile window
+    const updateProfile = document.getElementById("update-profile");
+    updateProfile.classList.add("Hidden");
+  });
+
+  uploadProfileButton.addEventListener("click", () => {
+    //  Collect all new information for uploading
+    const newEmail = document.getElementById("new-email").value;
+    const newPassword = document.getElementById("new-password").value;
+    const newName = document.getElementById("new-name").value;
+    const newImg = document.getElementById('input[type="file"]').files[0];
+
+    fileToDataUrl(newImg)
+      .then((data) => {
+        fetchPUT(
+          "user",
+          {
+            email: newEmail,
+            password: newPassword,
+            name: newName,
+            image: data,
+          },
+          "error happens when upload user info"
+        );
+      })
+      .then(() => {
+        errorPopup("New info upload successfully!!!");
+        //  refresh all info after successfully upload
+        document.getElementById("new-email").value = "";
+        document.getElementById("new-password").value = "";
+        document.getElementById("new-name").value = "";
+        document.getElementById('input[type="file"]').value = "";
+      });
+  });
+}
+
+export function watchUserByBar() {
+  const watchUserButton = document.getElementById("watch-user");
+  const searchBarDiv = document.getElementById("search-div");
+  const searchBar = document.getElementById("search-bar");
+
+  let valid = false;
+
+  watchUserButton.addEventListener("click", () => {
+    searchBarDiv.classList.remove("Hidden");
+    valid = true;
+  });
+
+  window.addEventListener("click", () => {
+    if (valid) {
+      valid = false;
+    } else {
+      //  every time when we click outside of search bar, it will be reset and hide
+      searchBar.value = "";
+      searchBarDiv.classList.add("Hidden");
+    }
+  });
+
+  searchBar.addEventListener("click", () => {
+    searchBarDiv.classList.remove("Hidden");
+    valid = true;
+  });
+
+  searchBar.addEventListener("keydown", (key) => {
+    //  When we press enter on the key board, the email we enter will sent to server via PUT request
+    if (key.code === "Enter") {
+      const emailField = searchBar.value;
+      if (emailField !== "") {
+        fetchPUT(
+          "user/watch",
+          { email: emailField, turnon: true },
+          "error happens when watch user via email"
+        );
+      } else {
+        alert("please enter email for watching user");
+      }
+    }
   });
 }

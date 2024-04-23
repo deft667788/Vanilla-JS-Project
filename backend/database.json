@@ -16,7 +16,9 @@
       "email": "Deft@qq.com",
       "name": "Deft",
       "password": "111",
-      "watcheeUserIds": {}
+      "watcheeUserIds": {
+        "65687": true
+      }
     },
     "84793": {
       "email": "Faker@qq.com",

@@ -1,10 +1,7 @@
 import { fetchGET, fetchPUT } from "./fetch.js";
-import {
-  addEventForEachName,
-  addEventForMyname
-} from "./viewProfile.js";
+import { addEventForEachName, addEventForMyname } from "./viewProfile.js";
 
-import { homeButton } from "./searchBar.js";
+import { homeButton, searchBar, updateProfileButton } from "./topBar.js";
 
 export function processCreatorId(creatorId, creatorName, creatorFollowers) {
   function getAllInfo(data) {
@@ -287,6 +284,8 @@ export function renderHomePage() {
 
   //  config search bar
   homeButton();
+  updateProfileButton();
+  searchBar();
 
   //  config side bar
   addEventForMyname();
