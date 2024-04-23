@@ -2,8 +2,8 @@ import { errorPopup } from "./error_handle.js";
 import { renderHomePage } from "./feed.js";
 import { fetchGET, fetchPOST } from "./fetch.js";
 
+//  Store user info to reuse later
 export function setUpUserName(userInfo) {
-  //  Store user info to reuse later
   localStorage.setItem(userInfo.id, userInfo.name);
   localStorage.setItem(userInfo.name, userInfo.id);
 }

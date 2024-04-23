@@ -1,11 +1,11 @@
-//  This file is for milestone4, related to how to render user profile
+// this file is for milestone4, related to how to render user profile
 import { errorPopup } from "./error_handle.js";
 import { analyzeTime } from "./feed.js";
 import { fetchGET, fetchPUT } from "./fetch.js";
 import { fileToDataUrl } from "./helpers.js";
 
-export function getWatchingUser(userId, watchedList) {
-  //  Copy and process the template
+// copy and process the template
+function getWatchingUser(userId, watchedList, newProfile) {
   const userNode = document
     .getElementById("like-user-template")
     .cloneNode(true);
@@ -15,7 +15,7 @@ export function getWatchingUser(userId, watchedList) {
   const userImgNode = userNode.childNodes[1];
   const userNameNode = userNode.childNodes[3];
   function successFetchUserId(data) {
-    //  Get info of all user watching this profile
+    // get info of all user watching this profile
     localStorage.setItem(data.name, data.id);
     localStorage.setItem(data.id, data.name);
     userNameNode.textContent = data.name;
@@ -26,9 +26,11 @@ export function getWatchingUser(userId, watchedList) {
     }
     watchedList.appendChild(userNode);
 
-    //userNameNode.addEventListener("click", () => {
-    //  renderProfile(userNameNode.textContent);
-    //});
+    // remove current profile to render an new profile
+    userNameNode.addEventListener("click", () => {
+      newProfile.remove();
+      renderProfile(userNameNode.textContent);
+    });
   }
 
   fetchGET(
@@ -38,106 +40,94 @@ export function getWatchingUser(userId, watchedList) {
   );
 }
 
-export function clearWatchList() {
-  //  Clear watching list to re-render next time
-  const childList = document
-    .getElementById("profile-watched-by-list")
-    .querySelectorALL("div");
-  
+// clear watching list to re-render next time
+function clearWatchList(newProfile) {
+  const childList = newProfile.childNodes[3].querySelectorAll("div");
+
   for (let item of childList) {
     item.remove();
   }
 }
 
-export function processUserInfo(data) {
-  //  Remove homepage and render profile page
-  document.getElementById("profile-template").classList.remove("Hidden");
-  document.getElementById("homepage-content").classList.add("Hidden");
-
-  const imgNode = document.getElementById("profile-user-img");
+// set up all user info
+function processUserInfo(data, newProfile) {
+  const userInfo = newProfile.childNodes[1];
+  const userImg = userInfo.childNodes[1];
+  // if user doesn't have img, replace with a sample img
   if (data.image !== undefined) {
-    imgNode.src = data.image;
+    userImg.src = data.image;
   } else {
-    imgNode.src = "./../sample-user.png";
+    userImg.src = "./../sample-user.png";
   }
-  document.getElementById("profile-user-name").textContent = data.name;
-  document.getElementById("profile-user-id").textContent = data.id;
 
-  document.getElementById("profile-user-email").textContent = data.email;
-  document.getElementById("profile-user-watched-by").textContent =
+  // process user info
+  const userName = userInfo.childNodes[3];
+  userName.textContent = data.name;
+
+  const userId = userInfo.childNodes[5];
+  userId.textContent = data.id;
+
+  const userEmail = userInfo.childNodes[7];
+  userEmail.textContent = data.email;
+
+  const userWatchBy = userInfo.childNodes[9];
+  userWatchBy.textContent =
     "watched by " +
     data.watcheeUserIds.length +
     (data.watcheeUserIds.length <= 1 ? " user" : " users");
-    //  Process user info
-
-    clearWatchList();
-    const watchedList = document.getElementById("profile-watched-by-list");
-
-    let watcheeListIds = data.watcheeUserIds;
-    //  Update user info for each watching user
-    for (const user of watcheeListIds) {
-      getWatchingUser(user, watchedList);
-    }
-
-    //  Check whether we have watched this user
-    const myId = Number(localStorage.getItem("loginUser"));
-
-    //  Set the default field of button to watch
-    const watchButton = document.getElementById("watch-and-unwatch-user");
-    watchButton.textContent = "watch";
-
-    //  Check whether the current profile we view is our own profile
-    if (data.id === myId) {
-      //  Hide this button, since we cannot watch/unwatch ourselves
-      watchButton.classList.add("Hidden");
-    } else {
-      //  Show button when we view other user profile
-      watchButton.classList.remove("Hidden");
-    }
-
-    for(const id of watcheeListIds) {
-      //  Initialise button field
-      if (myId === id) {
-        watchButton.textContent = "unwatch";
-      }
-    }
-
-    //  statr process jobs
 }
 
-/* export function processCloseButton() {
-  //  Config button to close profile
-  const closeButton = document.getElementById("close-profile");
-
-  //  Remove profile page and render homepage
-  closeButton.addEventListener("click", () => {
-    document.getElementById("profile-template").classList.add("Hidden");
-    document.getElementById("homepage-content").classList.remove("Hidden");
-  });
-} */
-
-export function processWatchButton(data) {
-  const watchButton = document.getElementById("watch-and-unwatch-user");
+// process all watch user
+function processWatchList(data, newProfile) {
+  const watchedList = newProfile.childNodes[3];
   let watcheeListIds = data.watcheeUserIds;
-  const watchedList = document.getElementById("profile-watched-by-list");
+  // update user info for each watching user
+  for (const user of watcheeListIds) {
+    getWatchingUser(user, watchedList, newProfile);
+  }
+}
+
+// process watch button
+function processWatchButton(data, newProfile) {
+  const watchButton = newProfile.childNodes[5];
+  let watcheeListIds = data.watcheeUserIds;
+  const watchedList = newProfile.childNodes[3];
   const myId = Number(localStorage.getItem("loginUser"));
 
-  function myfunc() {
-    //  Define this function so that we can delete the eventhandler later
+  // set the default field of button to watch
+  watchButton.textContent = "watch";
+
+  // check whether the current profile we view is our own profile
+  if (data.id === myId) {
+    // hide this button, since we cannot watch/unwatch ourselves
+    watchButton.classList.add("Hidden");
+  } else {
+    // show button when we view other user profile
+    watchButton.classList.remove("Hidden");
+  }
+
+  for (const id of watcheeListIds) {
+    // initialize button field
+    if (myId === id) {
+      watchButton.textContent = "unwatch";
+    }
+  }
+
+  watchButton.addEventListener("click", () => {
     if (watchButton.textContent == "unwatch") {
-      //  we have watched this user
+      // we have watched this user
       watchButton.textContent = "watch";
 
-      clearWatchList();
+      // delete our userId in watch list array
+      clearWatchList(newProfile);
       const index = watcheeListIds.indexOf(myId);
       watcheeListIds.splice(index, 1);
-      //  Delete our userId in watch list array
 
       for (const user of watcheeListIds) {
         getWatchingUser(user, watchedList);
       }
 
-      //  Send put request to server
+      // send put request to server
       fetchPUT(
         "user/watch",
         { email: data.email, turnon: false },
@@ -147,44 +137,24 @@ export function processWatchButton(data) {
       watchButton.textContent = "unwatch";
       watcheeListIds.push(myId);
 
-      //  re-render watch
-      clearWatchList();
+      // re-render watch
+      clearWatchList(newProfile);
       for (const user of watcheeListIds) {
         getWatchingUser(user, watchedList);
       }
 
-      //  Send put request to server
+      // send put request to server
       fetchPUT(
         "user/watch",
         { email: data.email, turnon: true },
         "error happens when sending watch request to server"
       );
     }
-  }
-  //  remove event listener for previous profile
-  watchButton.addEventListener("click", myfunc);
-
-  //  add event listener for current profile
-  watchButton.addEventListener("click", myfunc);
-
-  setTimeout(() => {
-    //  We need to set timeout to wait for asynchronous operation
-    const watchedList = document
-      .getElementById("profile-watched-by-list")
-      .getElementsByClassName("User-name");
-
-    for (let item of watchedList) {
-      item.addEventListener("click", () => {
-        watchButton.removeEventListener("click", myfunc);
-        //  we need to delete the original event handler for watch button, otherwise we will send to
-        //  request to server after we switch to another user
-        renderProfile(item.textContent);
-      });
-    }
-  }, 100);
+  });
 }
 
-export function processJob(data) {
+// process each job
+function processJob(data, newProfile) {
   const jobs = data.jobs;
   for (let job of jobs) {
     const newJob = document.createElement("div");
@@ -196,38 +166,49 @@ export function processJob(data) {
 
     const PostContent = newJobNode.childNodes[1].cloneNode(true);
     const PostImg = newJobNode.childNodes[3].cloneNode(true);
-    //  clone necessary node from post-template
+    // clone necessary node from post-template
 
-    //  Job-post-date
+    // Job-post-date
     PostContent.childNodes[1].textContent = analyzeTime(job.createdAt);
 
-    //  Job-title
+    // Job-title
     PostContent.childNodes[3].textContent = job.title;
 
-    //  Start-date
+    // Start-date
     PostContent.childNodes[5].textContent = analyzeTime(job.start);
 
-    //  Job-description
+    // Job-description
     PostContent.childNodes[7].textContent = job.description;
 
-    //  Job-image
+    // Job-image
     PostImg.src = job.image;
 
     newJob.append(PostContent);
     newJob.append(PostImg);
 
-    document.getElementById("profile-jobs-info").append(newJob);
-    //  Append new job to container
+    newProfile.childNodes[7].append(newJob);
+    // append new job to container
   }
 }
 
-export function renderProfile(userName) {
+function renderProfile(userName) {
   function successFetchInfo(data) {
-    //  bug exists when jump and watch between different users
-    processUserInfo(data);
-    processJob(data);
-    processWatchButton(data);
-    //  processCloseButton();
+    // bug exists when jump and watch between different users
+    // remove homepage and show profile
+    document.getElementById("homepage-content").classList.add("Hidden");
+
+    const newProfile = document.getElementById("profile-page").cloneNode(true);
+    newProfile.classList.remove("Hidden");
+    newProfile.removeAttribute("id");
+    newProfile.setAttribute("id", "real-profile");
+    // build a new profile from template profile
+
+    processUserInfo(data, newProfile);
+    processWatchList(data, newProfile);
+    processWatchButton(data, newProfile);
+    processJob(data, newProfile);
+
+    document.getElementById("homepage").append(newProfile);
   }
 
   const userId = localStorage.getItem(userName);
@@ -238,18 +219,20 @@ export function renderProfile(userName) {
   );
 }
 
+// config every element with User-name class name in post section
 export function addEventForEachName(newPost) {
   const userArr = newPost.getElementsByClassName("User-name");
   for (const ele of userArr) {
-    //  Add eventlistener for each user name
+    // add eventLister for each user name
     ele.addEventListener("click", () => {
       renderProfile(ele.textContent);
     });
   }
 }
 
-export function addEventForMyname() {
-  //  Config "my profile" of side bar to render my own profile
+// config profile for element at side bar
+export function addEventForMyName() {
+  // config "my profile" of side bar to render my own profile
   const myProfile = document.getElementById("my-profile");
   myProfile.addEventListener("click", () => {
     const myId = localStorage.getItem("loginUser");
@@ -258,34 +241,35 @@ export function addEventForMyname() {
   });
 }
 
+// config update user profile button at top bar
 export function updateProfile() {
   const updateProfileButton = document.getElementById("update-profile-button");
   const closeProfileButton = document.getElementById("close-upload-window");
   const uploadProfileButton = document.getElementById("upload-info");
 
   updateProfileButton.addEventListener("click", () => {
-    //  Pop up update profile window
+    // pop up update profile window
     const updateProfile = document.getElementById("update-profile");
     updateProfile.classList.remove("Hidden");
 
-    //  Refresh content of all fields, to re-enter new info
+    // refresh content of all fields, to re-enter new info
     document.getElementById("new-email").value = "";
     document.getElementById("new-password").value = "";
     document.getElementById("new-name").value = "";
   });
 
   closeProfileButton.addEventListener("click", () => {
-    //  close update profile window
+    // close update profile window
     const updateProfile = document.getElementById("update-profile");
     updateProfile.classList.add("Hidden");
   });
 
   uploadProfileButton.addEventListener("click", () => {
-    //  Collect all new information for uploading
+    // collect all new information for uploading
     const newEmail = document.getElementById("new-email").value;
     const newPassword = document.getElementById("new-password").value;
     const newName = document.getElementById("new-name").value;
-    const newImg = document.getElementById('input[type="file"]').files[0];
+    const newImg = document.querySelector('input[type="file"]').files[0];
 
     fileToDataUrl(newImg)
       .then((data) => {
@@ -297,20 +281,21 @@ export function updateProfile() {
             name: newName,
             image: data,
           },
-          "error happens when upload user info"
+          "error happens when upload uesr info"
         );
       })
       .then(() => {
         errorPopup("New info upload successfully!!!");
-        //  refresh all info after successfully upload
+        // refresh all info after successfully upload
         document.getElementById("new-email").value = "";
         document.getElementById("new-password").value = "";
         document.getElementById("new-name").value = "";
-        document.getElementById('input[type="file"]').value = "";
+        document.querySelector('input[type="file"]').value = "";
       });
   });
 }
 
+// config search bar to watch specific user via email
 export function watchUserByBar() {
   const watchUserButton = document.getElementById("watch-user");
   const searchBarDiv = document.getElementById("search-div");
@@ -327,7 +312,7 @@ export function watchUserByBar() {
     if (valid) {
       valid = false;
     } else {
-      //  every time when we click outside of search bar, it will be reset and hide
+      // every time when we click outside of search bar, it will be reset and hiden
       searchBar.value = "";
       searchBarDiv.classList.add("Hidden");
     }
@@ -339,7 +324,7 @@ export function watchUserByBar() {
   });
 
   searchBar.addEventListener("keydown", (key) => {
-    //  When we press enter on the key board, the email we enter will sent to server via PUT request
+    // when we press enter on key board, the email we enter will be sent to server via PUT request
     if (key.code === "Enter") {
       const emailField = searchBar.value;
       if (emailField !== "") {
