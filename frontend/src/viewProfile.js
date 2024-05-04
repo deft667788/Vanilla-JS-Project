@@ -187,8 +187,15 @@ function processJob(data, newProfile) {
 
     newJob.append(PostContent);
     newJob.append(PostImg);
-    newJob.append(postDel);
-    delPost(job.id, postDel, newJob);
+    
+    //  Check we are the person to delete our own posts
+    const myId = localStorage.getItem("loginUser");
+
+    //  Do not show delete button
+    if (myId == job.creatorId) {
+      newJob.append(postDel);
+      delPost(job.id, postDel, newJob);
+    }
 
     newProfile.childNodes[7].append(newJob);
     // append new job to container
