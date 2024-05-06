@@ -1,5 +1,10 @@
 import { fetchGET, fetchPut } from "./fetch.js";
-import { makeComment, makePost } from "./newPut.js";
+import {
+  closePostWindow,
+  makeComment,
+  makePost,
+  updatePostButton,
+} from "./newPut.js";
 import { homeButton, searchBar, updateProfileButton } from "./topBar.js";
 import { addEventForEachName, addEventForMyName } from "./viewProfile.js";
 
@@ -66,7 +71,9 @@ function processUserLikes(user, likeUsers) {
 }
 
 function processEachComment(comment, commentContent) {
-  let commentNode = document.getElementById("comment-template").cloneNode(true);
+  let commentNode = document
+    .getElementById("comment-template")
+    .cloneNode(true);
   commentNode.removeAttribute("id");
   commentNode.classList.remove("Hidden");
 
@@ -144,7 +151,8 @@ function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
       );
       removeUserFromLikes(loginUser, likeList, postInfo.id);
       likeButton.textContent = "Like";
-      let currentNumberUserLike = getNumberUserLikes(jobLikes.textContent) - 1;
+      let currentNumberUserLike = 
+        getNumberUserLikes(jobLikes.textContent) - 1;
 
       for (let item of userList) {
         if (item.childNodes[3].textContent == userName) {
@@ -162,7 +170,8 @@ function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
       );
       addUserintoLikes(loginUser, likeList, postInfo.id);
       likeButton.textContent = "Unlike";
-      let currentNumberUserLike = getNumberUserLikes(jobLikes.textContent) + 1;
+      let currentNumberUserLike =
+        getNumberUserLikes(jobLikes.textContent) + 1;
 
       processUserLikes(userName, likeUsers);
 
@@ -320,6 +329,8 @@ export function renderHomePage() {
 
   //  config make post&comment button
   makePost();
+  closePostWindow();
+  updatePostButton();
   
   //  config side bar
   addEventForMyName();
@@ -328,7 +339,7 @@ export function renderHomePage() {
   localStorage.setItem("Page", Number(currentPage) + 5);
   // update page to retrieve next 5 Posts next time
 
-  //  infinite scroll
+  //  infinite scroll of mileStone6
   
   fetchGET(
     `job/feed?start=${currentPage}`,

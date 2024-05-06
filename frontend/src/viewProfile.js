@@ -200,8 +200,8 @@ function processJob(data, newProfile) {
       modiPost(job.id, postModi);
     }
 
-    newProfile.childNodes[7].append(newJob);
     // append new job to container
+    newProfile.childNodes[7].append(newJob);
   }
 }
 
@@ -211,7 +211,9 @@ function renderProfile(userName) {
     // remove homepage and show profile
     document.getElementById("homepage-content").classList.add("Hidden");
 
-    const newProfile = document.getElementById("profile-page").cloneNode(true);
+    const newProfile = document
+      .getElementById("profile-page")
+      .cloneNode(true);
     newProfile.classList.remove("Hidden");
     newProfile.removeAttribute("id");
     newProfile.setAttribute("id", "real-profile");
@@ -257,7 +259,9 @@ export function addEventForMyName() {
 
 // config update user profile button at top bar
 export function updateProfile() {
-  const updateProfileButton = document.getElementById("update-profile-button");
+  const updateProfileButton = document.getElementById(
+    "update-profile-button"
+  );
   const closeProfileButton = document.getElementById("close-upload-window");
   const uploadProfileButton = document.getElementById("upload-info");
 
@@ -283,7 +287,9 @@ export function updateProfile() {
     const newEmail = document.getElementById("new-email").value;
     const newPassword = document.getElementById("new-password").value;
     const newName = document.getElementById("new-name").value;
-    const newImg = document.querySelector('input[type="file"]').files[0];
+    const newImg = document.querySelector(
+      'input[type="file"]'
+    ).files[0];
 
     fileToDataUrl(newImg)
       .then((data) => {
@@ -304,7 +310,9 @@ export function updateProfile() {
         document.getElementById("new-email").value = "";
         document.getElementById("new-password").value = "";
         document.getElementById("new-name").value = "";
-        document.querySelector('input[type="file"]').value = "";
+        document.querySelector(
+          'input[type="file"]'
+        ).value = "";
       });
   });
 }

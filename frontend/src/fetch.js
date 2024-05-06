@@ -54,6 +54,8 @@ export function fetchPut(req, bodyInfo, err) {
     .then((res) => {
       if (req === "user/watch" && res.status === 400) {
         alert("no user exist");
+      } else if (req === "job" && res.status === 200) {
+        alert("Post modified successfully");
       }
     })
     .catch(() => {
@@ -90,23 +92,6 @@ export function fetchDelete(req, postId) {
   }).then((res) => {
     if (res.status === 200) {
       alert("Delete successfully");
-    }
-  });
-}
-
-//  Update post into server
-export function fetchModi(req, postDetail) {
-  fetch("http://localhost:5005/" + req, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      accept: "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify(postDetail),
-  }).then((res) => {
-    if (res.status === 200) {
-      alert("Post modified successfully");
     }
   });
 }
